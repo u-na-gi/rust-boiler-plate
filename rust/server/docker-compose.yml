@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  web:
+    container_name: runacy-note-backend-rs
+    build: 
+      context: ./docker
+      dockerfile: dockerfile.dev
+    ports:
+      - 8088:8080
+    volumes:
+      - ./:/repo
+    tty: true
+    depends_on:
+      - db
+
+volumes:
+  db-data:
