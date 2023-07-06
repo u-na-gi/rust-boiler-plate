@@ -8,6 +8,15 @@ RUN apt update -y && apt upgrade -y && apt install -y \
     pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
+ENV CARGO_BUILD_TARGET_DIR=/tmp/target
 
+RUN USER=root cargo new --bin repo
 WORKDIR /repo
+COPY ./Cargo.toml Cargo.toml
+COPY ./Cargo.lock Cargo.lock
+
+RUN cargo build --release --color never && \
+rm src/*.rs && \
+cargo install cargo-watch && \
+rustup component add rustfmt
 
