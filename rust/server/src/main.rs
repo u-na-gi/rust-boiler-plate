@@ -1,21 +1,9 @@
 
-use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{ post, web, App, HttpResponse, HttpServer, Responder};
 use env_logger::Env;
 
-use serde::{ Serialize};
+use server::routes::*;
 
-#[derive(Serialize)]
-struct Book {
-    id: i32,
-    title: String,
-}
-
-#[get("/")]
-async fn hello() -> impl Responder {
-    let book = Book { id: 1, title: String::from("Title-1") };
-    let json = serde_json::to_string(&book).unwrap();
-    HttpResponse::Ok().body(json)
-}
 
 #[post("/echo")]
 async fn echo(req_body: String) -> impl Responder {
@@ -34,7 +22,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             // ミドルウェアとしてロガーを登録
             .wrap(actix_web::middleware::Logger::default())
-            .service(hello)
+            .service(health_check)
             .service(echo)
             .route("/hey", web::get().to(manual_hello))
     });
