@@ -2,7 +2,7 @@
 use actix_web::{ post, web, App, HttpResponse, HttpServer, Responder};
 use env_logger::Env;
 
-use server::routes::*;
+use runacy_note_backend::routes::*;
 
 
 #[post("/echo")]

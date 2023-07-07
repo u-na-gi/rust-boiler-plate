@@ -2,7 +2,5 @@
   "recommendations": [
     "rust-lang.rust-analyzer",
     "tejanium.copy-github-permalink",
-    "github.copilot",
-    "github.copilot-chat"
   ]
 }
